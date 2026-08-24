@@ -2,26 +2,47 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
+using FayeOS.Models;
 
 namespace FayeOS.Services.Applications
 {
     public class ApplicationService
     {
-        private readonly Dictionary<string, string> applications = new(StringComparer.OrdinalIgnoreCase)
+        private readonly Dictionary<string, ApplicationInfo> applications = new(StringComparer.OrdinalIgnoreCase)
         {
-            { "notepad", "notepad.exe" },
-            { "bloc de notas", "notepad.exe"},
+            {
+                "Calculador",
+                new ApplicationInfo
+                {
+                    FileName = "calc.exe",
+                    Arguments = ""
+                }
 
-            { "calculadora", "calc.exe" },
-            { "calc", "calc.exe"},
-
-            { "discord", "Discord.exe" },
-            { "dc", "Discord.exe" },
-
-            { "whatsApp", "WhatsApp.exe" },
-            { "wasap", "WhatsApp.exe" },
-
-            { "YouTube", "YouTube.exe" },
+            },
+            {
+                "Calc",
+                new ApplicationInfo
+                {
+                    FileName = "calc.exe",
+                    Arguments = ""
+                }
+            },
+            {
+                "Bloc de notas",
+                new ApplicationInfo
+                {
+                    FileName = "notepad.exe",
+                    Arguments = ""
+                }
+            },
+            {
+                "Notepad",
+                new ApplicationInfo
+                {
+                    FileName = "notepad.exe",
+                    Arguments = ""
+                }
+            }
         };
         public void OpenApplication(string fileName) 
         {
@@ -38,9 +59,9 @@ namespace FayeOS.Services.Applications
                 "inicia",
                 "abrir",
             };
-        public bool TryGetExecutable(string appName, out string? executable)
+        public bool TryGetApplication(string appName, out ApplicationInfo? app)
         {
-            return applications.TryGetValue(appName, out executable);
+            return applications.TryGetValue(appName, out app);
         } 
         public string NormalizeAppName(string appName)
         {

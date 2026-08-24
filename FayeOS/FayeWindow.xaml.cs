@@ -12,6 +12,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Linq;
 using FayeOS.Services.Applications;
+using FayeOS.Models;
 
 namespace FayeOS
 {
@@ -82,9 +83,9 @@ namespace FayeOS
 
                 appName = applicationService.NormalizeAppName(appName);
 
-                if (applicationService.TryGetExecutable(appName, out string? executable))
+                if (applicationService.TryGetApplication(appName, out ApplicationInfo? application))
                 {
-                    applicationService.OpenApplication(executable);
+                    applicationService.OpenApplication(application.FileName);
                     fayeMessage.Text = $"FAYE: Abriendo {appName}...";
                 }
                 else
