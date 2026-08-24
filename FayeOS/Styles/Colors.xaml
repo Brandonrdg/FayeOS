@@ -1,0 +1,19 @@
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <SolidColorBrush x:Key="FayeBackground" Color="#07111f"/>
+
+    <SolidColorBrush x:Key="FayePanel" Color="#990b1828"/>
+
+    <SolidColorBrush x:Key="FayeWorkspace" Color="#9910243a"/>
+
+    <SolidColorBrush x:Key="FayeBorder" Color="#405d9eff"/>
+
+    <SolidColorBrush x:Key="FayeTextPrimary" Color="#eaf4ff"/>
+
+    <SolidColorBrush x:Key="FayeTextSecondary" Color="#91a8bf"/>
+
+    <SolidColorBrush x:Key="FayeAccent" Color="#4da3ff"/>
+    
+</ResourceDictionary>

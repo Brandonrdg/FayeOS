@@ -1,0 +1,12 @@
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Style x:Key="FayePanelStyle" TargetType="Border">
+        <Setter Property="Background" Value="{StaticResource FayePanel}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource FayeBorder}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="CornerRadius" Value="18"/>
+        <Setter Property="Padding" Value="20"/>
+    </Style>
+</ResourceDictionary>

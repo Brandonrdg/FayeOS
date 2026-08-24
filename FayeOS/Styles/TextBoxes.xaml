@@ -1,0 +1,43 @@
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Style x:Key="FayeCommandTextBoxStyle" 
+           TargetType="TextBox">
+        
+        <Setter Property="Foreground" Value="{StaticResource FayeTextPrimary}"/>
+        
+        <Setter Property="FontSize" Value="14"/>
+        
+        <Setter Property="Background" Value="Transparent"/>
+        
+        <Setter Property="BorderThickness" Value="0"/>
+        
+        <Setter Property="CaretBrush" Value="{StaticResource FayeAccent}"/>
+
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TextBox">
+                    <Grid>
+                        <ScrollViewer x:Name="PART_ContentHost"
+                                      VerticalAlignment="Center"/>
+                        <TextBlock x:Name="Placeholder"
+                                   Text="Type a message..."
+                                   Foreground="{StaticResource FayeTextSecondary}"
+                                   IsHitTestVisible="False"
+                                   Visibility="Collapsed"
+                                   VerticalAlignment="Center"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="Text" Value="">
+                            <Setter TargetName="Placeholder" Property="Visibility" Value="Visible"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

@@ -1,0 +1,30 @@
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Style x:Key="FayeProgressBarStyle" TargetType="ProgressBar">
+        <Setter Property="Height" Value="6"/>
+        <Setter Property="Background" Value="#2510243A"/>
+        <Setter Property="Foreground" Value="{StaticResource FayeAccent}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ProgressBar">
+                    <Grid x:Name="PART_Track">
+                        <Border Background="{TemplateBinding Background}" 
+                                CornerRadius="3"/>
+
+                        <Border x:Name="PART_Indicator" 
+                                Background="{TemplateBinding Foreground}" 
+                                CornerRadius="3"
+                                HorizontalAlignment="Left">
+                            <Border.Effect>
+                                <DropShadowEffect Color="#4da3ff" BlurRadius="8" ShadowDepth="0" Opacity="0.65"/>
+                            </Border.Effect>
+                        </Border>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>   
+    </Style>
+</ResourceDictionary>
