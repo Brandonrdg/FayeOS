@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Text;
 using FayeOS.Models;
 
@@ -8,6 +9,7 @@ namespace FayeOS.Services.Applications
 {
     public class ApplicationService
     {
+        private readonly static string localAppData = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
         private readonly Dictionary<string, ApplicationInfo> applications = new(StringComparer.OrdinalIgnoreCase)
         {
             {
@@ -42,13 +44,30 @@ namespace FayeOS.Services.Applications
                     FileName = "notepad.exe",
                     Arguments = ""
                 }
+            },
+            {   
+                "Discord",
+                new ApplicationInfo
+                {
+                    FileName = Path.Combine(localAppData, "Discord", "Update.exe"),
+                    Arguments = "--processStart Discord.exe"
+                }
+            },
+            {   
+                "DC",
+                new ApplicationInfo
+                {
+                    FileName = Path.Combine(localAppData, "Discord", "Update.exe"),
+                    Arguments = "--processStart Discord.exe"
+                }
             }
         };
-        public void OpenApplication(string fileName) 
+        public void OpenApplication(ApplicationInfo application) 
         {
-            Process.Start(new ProcessStartInfo(fileName) 
+            Process.Start(new ProcessStartInfo(application.FileName) 
             {
-                FileName = fileName,
+                FileName = application.FileName,
+                Arguments = application.Arguments,
                 UseShellExecute = true 
             });
         }

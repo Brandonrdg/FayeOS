@@ -85,7 +85,7 @@ namespace FayeOS
 
                 if (applicationService.TryGetApplication(appName, out ApplicationInfo? application))
                 {
-                    applicationService.OpenApplication(application.FileName);
+                    applicationService.OpenApplication(application);
                     fayeMessage.Text = $"FAYE: Abriendo {appName}...";
                 }
                 else
