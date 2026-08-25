@@ -75,6 +75,11 @@ namespace FayeOS
 
             RamUsageText.Text = $"{ramUsage:0}%";
             RamProgressBar.Value = ramUsage;
+
+            double cpuUsage = systemService.GetCpuUsagePercentage();
+
+            cpuUsageText.Text = $"{cpuUsage:0}%";
+            CpuProgressBar.Value = cpuUsage;
         }
         private void SystemTimer_Tick(object? sender, EventArgs e)
         {
