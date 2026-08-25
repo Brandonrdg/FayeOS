@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Runtime.InteropServices;
+using FayeOS.Models;
 
 namespace FayeOS.Services.System
 {
@@ -86,6 +87,21 @@ namespace FayeOS.Services.System
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool GlobalMemoryStatusEx(ref MEMORYSTATUSEX lpBuffer);
 
+        public MemoryInfo GetMemoryInfo()
+        {
+            MEMORYSTATUSEX memoryStatus = new MEMORYSTATUSEX();
+            memoryStatus.dwLength = (uint)Marshal.SizeOf(typeof(MEMORYSTATUSEX));
+            if (!GlobalMemoryStatusEx(ref memoryStatus))
+            {
+                throw new InvalidOperationException("No se pudo obtener la informacion de memoria");
+            }
+            return new MemoryInfo
+            {
+                UsagePercentage = memoryStatus.dwMemoryLoad,
+                TotalGB = memoryStatus.ullTotalPhys / (1024.0 * 1024.0 * 1024.0),
+                UsedGB = (memoryStatus.ullTotalPhys - memoryStatus.ullAvailPhys) / (1024.0 * 1024.0 * 1024.0)
+            };
+        }
         public double GetRamUsagePercentage() 
         {
             MEMORYSTATUSEX memoryStatus = new MEMORYSTATUSEX();

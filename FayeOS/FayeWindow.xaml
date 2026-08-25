@@ -133,6 +133,11 @@
                                      Height="5"
                                      Margin="0,8,0,0"
                                      Style="{StaticResource FayeProgressBarStyle}"/>
+                        <TextBlock x:Name="RamTotalText"
+                                   Text="0,0 GB / 0,0 GB"
+                                   Foreground="{StaticResource FayeTextSecondary}"
+                                   FontSize="11"
+                                   Margin="0,8,0,0"/>
                     </StackPanel>
                 </Grid>
             </Border>

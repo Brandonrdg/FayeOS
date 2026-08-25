@@ -71,10 +71,12 @@ namespace FayeOS
         }
         private void UpdateSystemStats() 
         {
-            double ramUsage = systemService.GetRamUsagePercentage();
+            MemoryInfo memoryInfo = systemService.GetMemoryInfo();
 
-            RamUsageText.Text = $"{ramUsage:0}%";
-            RamProgressBar.Value = ramUsage;
+            RamUsageText.Text = $"{memoryInfo.UsagePercentage:0}%";
+            RamProgressBar.Value = memoryInfo.UsagePercentage;
+
+            RamTotalText.Text = $"{memoryInfo.UsedGB:0.00} GB / {memoryInfo.TotalGB:0.00} GB";
 
             double cpuUsage = systemService.GetCpuUsagePercentage();
 
