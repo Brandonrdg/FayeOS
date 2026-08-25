@@ -14,6 +14,7 @@ using System.Linq;
 using FayeOS.Services.Applications;
 using FayeOS.Models;
 using FayeOS.Services.System;
+using System.Windows.Threading;
 
 namespace FayeOS
 {
@@ -26,14 +27,17 @@ namespace FayeOS
 
         private readonly SystemService systemService = new();
 
+        private readonly DispatcherTimer systemTimer = new();
+
         public FayeWindow()
         {
             InitializeComponent();
 
-            double ramUsage = systemService.GetRamUsagePercentage();
+            UpdateSystemStats();
 
-            RamUsageText.Text = $"{ramUsage:0}%";
-            RamProgressBar.Value = ramUsage;
+            systemTimer.Interval = TimeSpan.FromSeconds(1);
+            systemTimer.Tick += SystemTimer_Tick;
+            systemTimer.Start();
         }
         private void Window_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -64,6 +68,17 @@ namespace FayeOS
                     CommandTextBox.Clear();
                 }
             }
+        }
+        private void UpdateSystemStats() 
+        {
+            double ramUsage = systemService.GetRamUsagePercentage();
+
+            RamUsageText.Text = $"{ramUsage:0}%";
+            RamProgressBar.Value = ramUsage;
+        }
+        private void SystemTimer_Tick(object? sender, EventArgs e)
+        {
+            UpdateSystemStats();
         }
         private void ProcessComand(string command)
         {
