@@ -13,6 +13,7 @@ using System.Windows.Shapes;
 using System.Linq;
 using FayeOS.Services.Applications;
 using FayeOS.Models;
+using FayeOS.Services.System;
 
 namespace FayeOS
 {
@@ -23,10 +24,16 @@ namespace FayeOS
     {
         private readonly ApplicationService applicationService = new();
 
-        
+        private readonly SystemService systemService = new();
+
         public FayeWindow()
         {
             InitializeComponent();
+
+            double ramUsage = systemService.GetRamUsagePercentage();
+
+            RamUsageText.Text = $"{ramUsage:0}%";
+            RamProgressBar.Value = ramUsage;
         }
         private void Window_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {

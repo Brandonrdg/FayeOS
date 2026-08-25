@@ -120,7 +120,8 @@
                         <TextBlock Text="RAM"
                                        Foreground="{StaticResource FayeTextSecondary}"
                                        FontSize="11"/>
-                        <TextBlock Text="64%"
+                        <TextBlock x:Name="RamUsageText"
+                                   Text="64%"
                                    Foreground="{StaticResource FayeTextPrimary}"
                                    FontSize="22"
                                    FontWeight="Light"
