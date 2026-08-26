@@ -16,7 +16,6 @@
     <Folder Include="Commands\" />
     <Folder Include="Data\" />
     <Folder Include="Helpers\" />
-    <Folder Include="ViewModels\" />
     <Folder Include="Views\Controls\" />
     <Folder Include="Views\Windows\" />
   </ItemGroup>

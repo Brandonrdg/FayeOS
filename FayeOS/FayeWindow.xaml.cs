@@ -15,6 +15,7 @@ using FayeOS.Services.Applications;
 using FayeOS.Models;
 using FayeOS.Services.System;
 using System.Windows.Threading;
+using FayeOS.ViewModels;
 
 namespace FayeOS
 {
@@ -23,6 +24,7 @@ namespace FayeOS
     /// </summary>
     public partial class FayeWindow : Window
     {
+        private readonly SystemViewModel SystemViewModel = new();
         private readonly ApplicationService applicationService = new();
 
         private readonly SystemService systemService = new();
@@ -34,6 +36,8 @@ namespace FayeOS
             InitializeComponent();
 
             UpdateSystemStats();
+
+            DataContext = SystemViewModel;
 
             systemTimer.Interval = TimeSpan.FromSeconds(1);
             systemTimer.Tick += SystemTimer_Tick;
@@ -72,16 +76,12 @@ namespace FayeOS
         private void UpdateSystemStats() 
         {
             MemoryInfo memoryInfo = systemService.GetMemoryInfo();
-
-            RamUsageText.Text = $"{memoryInfo.UsagePercentage:0}%";
-            RamProgressBar.Value = memoryInfo.UsagePercentage;
-
-            RamTotalText.Text = $"{memoryInfo.UsedGB:0.00} GB / {memoryInfo.TotalGB:0.00} GB";
-
             double cpuUsage = systemService.GetCpuUsagePercentage();
 
-            cpuUsageText.Text = $"{cpuUsage:0}%";
-            CpuProgressBar.Value = cpuUsage;
+            SystemViewModel.RamUsage = memoryInfo.UsagePercentage;
+            SystemViewModel.RamUsedGB = memoryInfo.UsedGB;
+            SystemViewModel.RamTotalGB = memoryInfo.TotalGB;
+            SystemViewModel.CpuUsage = cpuUsage; 
         }
         private void SystemTimer_Tick(object? sender, EventArgs e)
         {
