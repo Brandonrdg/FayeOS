@@ -1,9 +1,10 @@
-﻿using System;
+﻿using FayeOS.Models;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
-using FayeOS.Models;
+using System.Windows;
 
 namespace FayeOS.Services.Applications
 {
@@ -17,7 +18,8 @@ namespace FayeOS.Services.Applications
                 new ApplicationInfo
                 {
                     FileName = "calc.exe",
-                    Arguments = ""
+                    Arguments = "",
+                    ProcessName = "Calculator"
                 }
 
             },
@@ -26,7 +28,8 @@ namespace FayeOS.Services.Applications
                 new ApplicationInfo
                 {
                     FileName = "calc.exe",
-                    Arguments = ""
+                    Arguments = "",
+                    ProcessName = "Calculator"
                 }
             },
             {
@@ -34,7 +37,8 @@ namespace FayeOS.Services.Applications
                 new ApplicationInfo
                 {
                     FileName = "notepad.exe",
-                    Arguments = ""
+                    Arguments = "",
+                    ProcessName = "notepad"
                 }
             },
             {
@@ -42,7 +46,8 @@ namespace FayeOS.Services.Applications
                 new ApplicationInfo
                 {
                     FileName = "notepad.exe",
-                    Arguments = ""
+                    Arguments = "",
+                    ProcessName = "notepad"
                 }
             },
             {   
@@ -50,7 +55,8 @@ namespace FayeOS.Services.Applications
                 new ApplicationInfo
                 {
                     FileName = Path.Combine(localAppData, "Discord", "Update.exe"),
-                    Arguments = "--processStart Discord.exe"
+                    Arguments = "--processStart Discord.exe",
+                    ProcessName = "Discord"
                 }
             },
             {   
@@ -58,7 +64,8 @@ namespace FayeOS.Services.Applications
                 new ApplicationInfo
                 {
                     FileName = Path.Combine(localAppData, "Discord", "Update.exe"),
-                    Arguments = "--processStart Discord.exe"
+                    Arguments = "--processStart Discord.exe",
+                    ProcessName = "Discord"
                 }
             }
         };

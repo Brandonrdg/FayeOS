@@ -93,7 +93,7 @@ namespace FayeOS
 
             string? detectedAction = applicationService.openActions.FirstOrDefault(action => normalizedCommand.Contains(action));
 
-            
+            string? detectedCloseAction = applicationService.closeActions.FirstOrDefault(action => normalizedCommand.Contains(action));
 
             TextBlock fayeMessage = new TextBlock();
 
@@ -127,20 +127,22 @@ namespace FayeOS
                 fayeMessage.Text = "FAYE: No reconozco ese comando.";
             }
 
-            if (detectedAction != null)
+            if (detectedCloseAction != null)
             {
-                int actionIndex = normalizedCommand.IndexOf(detectedAction);
-                int appNameStartIndex = actionIndex + detectedAction.Length;
+                int actionIndex = normalizedCommand.IndexOf(detectedCloseAction);
+                int appNameStartIndex = actionIndex + detectedCloseAction.Length;
                 string appName = normalizedCommand.Substring(appNameStartIndex).Trim();
                 appName = applicationService.NormalizeAppName(appName);
+
+                
 
                 if (applicationService.TryGetApplication(appName, out ApplicationInfo? application))
                 {
                     bool closed = applicationService.CloseApplication(application);
 
-                    if (closed)
+                    if (closed == true)
                     {
-                        fayeMessage.Text = $"FAYE: {appName} cerrado.";
+                        fayeMessage.Text = $"FAYE: cerrando {appName}...";
                     }
                     else
                     {
@@ -149,12 +151,8 @@ namespace FayeOS
                 }
                 else
                 {
-                    fayeMessage.Text = $"FAYE: No puedo cerrar {appName}.";
+                    fayeMessage.Text = $"FAYE: No reconozco ese comando.";
                 }
-            }
-            else
-            {
-                fayeMessage.Text = "FAYE: No reconozco ese comando.";
             }
             
 
