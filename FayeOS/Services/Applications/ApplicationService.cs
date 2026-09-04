@@ -71,12 +71,41 @@ namespace FayeOS.Services.Applications
                 UseShellExecute = true 
             });
         }
+        public bool CloseApplication(ApplicationInfo application)
+        {
+            Process[] processes = Process.GetProcessesByName(application.ProcessName);
+
+            if (processes.Length == 0)
+            {
+                return false;
+            }
+            foreach (Process process in processes)
+            {
+                try 
+                {
+                    process.Kill(); 
+                }
+                catch 
+                {
+                    return false; 
+                }
+            }
+
+            return true;
+        }
         public readonly string[] openActions =
             {
                 "abre",
                 "ejecuta",
                 "inicia",
                 "abrir",
+            };
+        public readonly string[] closeActions =
+            {
+                "cierra",
+                "termina",
+                "finaliza",
+                "cerrar",
             };
         public bool TryGetApplication(string appName, out ApplicationInfo? app)
         {

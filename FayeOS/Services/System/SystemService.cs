@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Runtime.InteropServices;
 using FayeOS.Models;
+using System.Diagnostics;
 
 namespace FayeOS.Services.System
 {
@@ -115,6 +116,7 @@ namespace FayeOS.Services.System
 
             return memoryStatus.dwMemoryLoad;
         }
+        
     }
 
 }

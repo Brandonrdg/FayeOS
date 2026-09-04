@@ -9,5 +9,6 @@ namespace FayeOS.Models
     {
         public string FileName { get; set; } = "";
         public string Arguments { get; set; } = "";
+        public string ProcessName { get; set; }
     }
 }

@@ -126,7 +126,36 @@ namespace FayeOS
             {
                 fayeMessage.Text = "FAYE: No reconozco ese comando.";
             }
-           
+
+            if (detectedAction != null)
+            {
+                int actionIndex = normalizedCommand.IndexOf(detectedAction);
+                int appNameStartIndex = actionIndex + detectedAction.Length;
+                string appName = normalizedCommand.Substring(appNameStartIndex).Trim();
+                appName = applicationService.NormalizeAppName(appName);
+
+                if (applicationService.TryGetApplication(appName, out ApplicationInfo? application))
+                {
+                    bool closed = applicationService.CloseApplication(application);
+
+                    if (closed)
+                    {
+                        fayeMessage.Text = $"FAYE: {appName} cerrado.";
+                    }
+                    else
+                    {
+                        fayeMessage.Text = $"FAYE: No puedo cerrar {appName}.";
+                    }
+                }
+                else
+                {
+                    fayeMessage.Text = $"FAYE: No puedo cerrar {appName}.";
+                }
+            }
+            else
+            {
+                fayeMessage.Text = "FAYE: No reconozco ese comando.";
+            }
             
 
             fayeMessage.Foreground = Brushes.LightBlue;
