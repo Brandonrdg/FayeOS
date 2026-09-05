@@ -4,7 +4,7 @@ using System.Text;
 
 namespace FayeOS.Services.Commands
 {
-    public class BasicComands
+    public class ComandService
     {
 
     }

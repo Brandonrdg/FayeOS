@@ -87,13 +87,59 @@ namespace FayeOS
         {
             UpdateSystemStats();
         }
+        private string HandleOpenCommand(string normalizedCommand, string detectedOpenAction) 
+        {
+            int actionIndex = normalizedCommand.IndexOf(detectedOpenAction);
+            int appNameStartIndex = actionIndex + detectedOpenAction.Length;
+            string appName = normalizedCommand.Substring(appNameStartIndex).Trim();
+            appName = applicationService.NormalizeAppName(appName);
+
+            if (applicationService.TryGetApplication(appName, out ApplicationInfo? application))
+            {
+                applicationService.OpenApplication(application);
+                return $"FAYE: Abriendo {appName}...";
+            }
+            else
+            {
+                return $"FAYE: No puedo abrir {appName}.";
+            }
+        }
+        private string HandleCloseCommand(string normalizedCommand, string detectedCloseAction) 
+        {
+            int actionIndex = normalizedCommand.IndexOf(detectedCloseAction);
+            int appNameStartIndex = actionIndex + detectedCloseAction.Length;
+            string appName = normalizedCommand.Substring(appNameStartIndex).Trim();
+            appName = applicationService.NormalizeAppName(appName);
+
+
+
+            if (applicationService.TryGetApplication(appName, out ApplicationInfo? application))
+            {
+                bool closed = applicationService.CloseApplication(application);
+
+                if (closed == true)
+                {
+                    return $"FAYE: cerrando {appName}...";
+                }
+                else
+                {
+                    return $"FAYE: No puedo cerrar {appName}.";
+                }
+            }
+            else
+            {
+                return $"FAYE: No reconozco ese comando.";
+            }
+        }
+
+
         private void ProcessComand(string command)
         {
             string normalizedCommand = command.Trim().ToLower();
 
-            string? detectedAction = applicationService.openActions.FirstOrDefault(action => normalizedCommand.Contains(action));
+            string detectedOpenAction = applicationService.openActions.FirstOrDefault(action => normalizedCommand.Contains(action));
 
-            string? detectedCloseAction = applicationService.closeActions.FirstOrDefault(action => normalizedCommand.Contains(action));
+            string detectedCloseAction = applicationService.closeActions.FirstOrDefault(action => normalizedCommand.Contains(action));
 
             TextBlock fayeMessage = new TextBlock();
 
@@ -101,60 +147,20 @@ namespace FayeOS
             {
                 fayeMessage.Text = "FAYE: Hola! How can I help you today?";
             }
-            
-            else if(detectedAction != null) 
+            else if (detectedOpenAction != null)
             {
-                int actionIndex = normalizedCommand.IndexOf(detectedAction);
-
-                int appNameStartIndex = actionIndex + detectedAction.Length;
-
-                string appName = normalizedCommand.Substring(appNameStartIndex).Trim();
-
-                appName = applicationService.NormalizeAppName(appName);
-
-                if (applicationService.TryGetApplication(appName, out ApplicationInfo? application))
-                {
-                    applicationService.OpenApplication(application);
-                    fayeMessage.Text = $"FAYE: Abriendo {appName}...";
-                }
-                else
-                {
-                    fayeMessage.Text = $"FAYE: No puedo abrir {appName}.";
-                }
+                string openResponse = HandleOpenCommand(normalizedCommand, detectedOpenAction);
+                fayeMessage.Text = openResponse;
+            }
+            else if (detectedCloseAction != null)
+            {
+                string closeResponse = HandleCloseCommand(normalizedCommand, detectedCloseAction);
+                fayeMessage.Text = closeResponse;
             }
             else
             {
                 fayeMessage.Text = "FAYE: No reconozco ese comando.";
             }
-
-            if (detectedCloseAction != null)
-            {
-                int actionIndex = normalizedCommand.IndexOf(detectedCloseAction);
-                int appNameStartIndex = actionIndex + detectedCloseAction.Length;
-                string appName = normalizedCommand.Substring(appNameStartIndex).Trim();
-                appName = applicationService.NormalizeAppName(appName);
-
-                
-
-                if (applicationService.TryGetApplication(appName, out ApplicationInfo? application))
-                {
-                    bool closed = applicationService.CloseApplication(application);
-
-                    if (closed == true)
-                    {
-                        fayeMessage.Text = $"FAYE: cerrando {appName}...";
-                    }
-                    else
-                    {
-                        fayeMessage.Text = $"FAYE: No puedo cerrar {appName}.";
-                    }
-                }
-                else
-                {
-                    fayeMessage.Text = $"FAYE: No reconozco ese comando.";
-                }
-            }
-            
 
             fayeMessage.Foreground = Brushes.LightBlue;
             fayeMessage.Margin = new Thickness(0, 5, 0, 10);

@@ -14,12 +14,12 @@ namespace FayeOS.Services.Applications
         private readonly Dictionary<string, ApplicationInfo> applications = new(StringComparer.OrdinalIgnoreCase)
         {
             {
-                "Calculador",
+                "Calculadora",
                 new ApplicationInfo
                 {
                     FileName = "calc.exe",
                     Arguments = "",
-                    ProcessName = "Calculator"
+                    ProcessName = "CalculatorApp"
                 }
 
             },
@@ -29,7 +29,7 @@ namespace FayeOS.Services.Applications
                 {
                     FileName = "calc.exe",
                     Arguments = "",
-                    ProcessName = "Calculator"
+                    ProcessName = "CalculatorApp"
                 }
             },
             {
@@ -113,6 +113,8 @@ namespace FayeOS.Services.Applications
                 "termina",
                 "finaliza",
                 "cerrar",
+                "terminar",
+                "finalizar"
             };
         public bool TryGetApplication(string appName, out ApplicationInfo? app)
         {
