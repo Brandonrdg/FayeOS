@@ -100,51 +100,11 @@ namespace FayeOS.Services.Applications
 
             return true;
         }
-        public readonly string[] openActions =
-            {
-                "abre",
-                "ejecuta",
-                "inicia",
-                "abrir",
-            };
-        public readonly string[] closeActions =
-            {
-                "cierra",
-                "termina",
-                "finaliza",
-                "cerrar",
-                "terminar",
-                "finalizar"
-            };
+        
         public bool TryGetApplication(string appName, out ApplicationInfo? app)
         {
             return applications.TryGetValue(appName, out app);
         } 
-        public string NormalizeAppName(string appName)
-        {
-            appName = appName.Trim();
-
-            string[] articles =
-            {
-                "el", 
-                "la",
-                "los",
-                "las",
-                "un",
-                "una",
-                "unos",
-                "unas"
-            };
-
-            foreach (string article in articles) 
-            {
-                if (appName.StartsWith(article)) 
-                {
-                    appName = appName.Substring(article.Length);
-                    break;
-                }
-            }
-            return appName.Trim();
-        }
+        
     }
 }

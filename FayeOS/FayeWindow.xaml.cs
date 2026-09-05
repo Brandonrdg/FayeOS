@@ -16,6 +16,7 @@ using FayeOS.Models;
 using FayeOS.Services.System;
 using System.Windows.Threading;
 using FayeOS.ViewModels;
+using FayeOS.Services.Commands;
 
 namespace FayeOS
 {
@@ -30,6 +31,8 @@ namespace FayeOS
         private readonly SystemService systemService = new();
 
         private readonly DispatcherTimer systemTimer = new();
+
+        private readonly CommandService commandServices = new();
 
         public FayeWindow()
         {
@@ -89,10 +92,7 @@ namespace FayeOS
         }
         private string HandleOpenCommand(string normalizedCommand, string detectedOpenAction) 
         {
-            int actionIndex = normalizedCommand.IndexOf(detectedOpenAction);
-            int appNameStartIndex = actionIndex + detectedOpenAction.Length;
-            string appName = normalizedCommand.Substring(appNameStartIndex).Trim();
-            appName = applicationService.NormalizeAppName(appName);
+            string appName = commandServices.ExtractAppName(normalizedCommand, detectedOpenAction);
 
             if (applicationService.TryGetApplication(appName, out ApplicationInfo? application))
             {
@@ -106,12 +106,7 @@ namespace FayeOS
         }
         private string HandleCloseCommand(string normalizedCommand, string detectedCloseAction) 
         {
-            int actionIndex = normalizedCommand.IndexOf(detectedCloseAction);
-            int appNameStartIndex = actionIndex + detectedCloseAction.Length;
-            string appName = normalizedCommand.Substring(appNameStartIndex).Trim();
-            appName = applicationService.NormalizeAppName(appName);
-
-
+            string appName = commandServices.ExtractAppName(normalizedCommand, detectedCloseAction);
 
             if (applicationService.TryGetApplication(appName, out ApplicationInfo? application))
             {
@@ -135,11 +130,11 @@ namespace FayeOS
 
         private void ProcessComand(string command)
         {
-            string normalizedCommand = command.Trim().ToLower();
+            string normalizedCommand = commandServices.normalizedCommand(command);
 
-            string detectedOpenAction = applicationService.openActions.FirstOrDefault(action => normalizedCommand.Contains(action));
+            string detectedOpenAction = commandServices.DetectOpenAction(normalizedCommand);
 
-            string detectedCloseAction = applicationService.closeActions.FirstOrDefault(action => normalizedCommand.Contains(action));
+            string detectedCloseAction = commandServices.DetectCloseAction(normalizedCommand);
 
             TextBlock fayeMessage = new TextBlock();
 
